@@ -1,3 +1,27 @@
+> [!WARNING] 
+> Very Crude, Use at your own risk. Don't get banned.
+> It's possible to fetch 3000 posts at once. (that's the max I tried, could be more)
+
+> [!NOTE]  
+> No async.
+
+# Demo
+
+### Fetching Posts data and Downloading Images
+<img src="img/1.PNG" alt="Image 1" width="80%">
+
+### Searching Reddit and Fetching Post Data
+<img src="img/2.PNG" alt="Image 2" width="80%">
+
+### Downloaded Images
+<img src="img/3.PNG" alt="Image 3" width="80%">
+
+### Fuck you spez :: data for user behaviour analysis
+<img src="img/4.PNG" alt="Image 4" width="80%">
+
+### Subreddit Posts :: data hoarding
+<img src="img/5.PNG" alt="Image 5" width="80%">
+
 ## Module: `reddit_miner.py`
 
 This module contains the `RedditMiner` class, which is responsible for scraping Reddit and performing various data extraction tasks. The class handles interacting with Reddit's JSON API and Google Search for Reddit-related content.
