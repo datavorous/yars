@@ -1,6 +1,6 @@
 > [!WARNING] 
 > Very Crude, Use at your own risk. Don't get banned.
-> It's possible to fetch 3000 posts at once. (that's the max I tried, could be more)
+> It's possible to fetch 1800 posts at once. (that's the max I tried, could be more)
 
 > [!NOTE]  
 > No async.
