@@ -28,7 +28,7 @@ This module contains the `RedditMiner` class, which is responsible for scraping 
 
 ### Dependencies:
 - `requests`: To make HTTP requests.
-- `googlesearch`: For querying Google search results.
+- `googlesearch-python`: For querying Google search results.
 
 ### Classes:
 
@@ -151,14 +151,10 @@ This class inherits from `RedditMiner` and provides higher-level functionality, 
 
 ---
 
-### Example Use Case (Summary):
+### Example Use Case:
 - **Subreddit Data Hoarding:** Collect all posts, comments, and image data from a subreddit.
 - **User OSINT:** Gather and save the Reddit activity of a specific user.
 - **Bulk Image Downloading:** Scrape and download images from a subreddit.
-
-### Error Handling:
-- The code gracefully handles errors in fetching data (e.g., status codes other than 200) and parsing JSON responses.
-- Invalid categories or missing data fields are handled with appropriate messages.
 
 ---
 
