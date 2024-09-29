@@ -1,6 +1,6 @@
 <div align="center">
   
-<img src="logo.svg" width="80%">
+<img src="logo.svg" width="10%">
 
 # YARS (Yet Another Reddit Scraper)
 
