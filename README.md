@@ -25,11 +25,13 @@ YARS is a Python package designed to simplify the process of scraping Reddit for
    ```
    git clone https://github.com/datavorous/YARS.git
    cd yars
+   cd yars
    ```
 
 2. Install Poetry (if not already installed):
    ```
    pip install poetry
+   poetry shell
    ```
 
 3. Install dependencies using Poetry:
