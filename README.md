@@ -12,7 +12,8 @@ YARS is a Python package designed to simplify the process of scraping Reddit for
 
 > [!WARNING] 
 > Use with rotating proxies, or Reddit might gift you with an IP ban.  
-> I could extract max 2552 posts at once from 'r/all' using this.
+> I could extract max 2552 posts at once from 'r/all' using this.  
+> [Here](https://files.catbox.moe/zdra2i.json) is a **7.1 MB JSON** file containing the top 100 posts from 'r/nosleep', which included post titles, body text, all comments and their replies, post scores, time of upload etc.
 
 ## Dependencies
 - `requests`
