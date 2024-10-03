@@ -1,11 +1,17 @@
+from __future__ import annotations
+
 import requests
 import time
+
+import agents
+
 
 class YARS:
     """
     A class to interact with Reddit's API and perform various operations such as searching for posts, 
     scraping post details, fetching user data, and retrieving posts from specific subreddits using the age old .json trick.
     """
+    __slots__ = ("headers", "session")
 
     def __init__(self, user_agent='Mozilla/5.0', proxy=None):
         """
@@ -28,6 +34,30 @@ class YARS:
                 'http': proxy,
                 'https': proxy
             })
+
+    def set_user_agent(self, user_agent: str) -> None:
+        """
+        Update user agent.
+
+        Parameters:
+        - user_agent (str): New user agent to use in future requests.
+
+        Returns:
+        - Nothing
+        """
+        self.headers['User-Agent'] = user_agent
+
+    def set_random_user_agent(self) -> None:
+        """
+        Set user agent to a random user agent.
+
+        Parameters:
+        - None
+
+        Returns:
+        - Nothing
+        """
+        self.set_user_agent(agents.get_agent())
 
     def search_reddit(self, query, limit=10, after=None, before=None):
         """
