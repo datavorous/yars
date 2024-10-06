@@ -1,41 +1,49 @@
-import os
-import csv
 import json
-import requests
+import os
 from urllib.parse import urlparse
-from pygments import highlight, lexers, formatters
+
+import requests
+from pygments import formatters, highlight, lexers
+
 
 def display_results(results, title):
     """
     Display the results in a formatted manner using Pygments for syntax highlighting.
-    
+
     Args:
     results (list or dict): List of dictionaries or a single dictionary containing the results.
     title (str): Title of the results section.
     """
     # Print the title
     print(f"\n{'-'*20} {title} {'-'*20}")
-    
+
     if isinstance(results, list):
         for item in results:
             if isinstance(item, dict):
                 # Format JSON and apply syntax highlighting
                 formatted_json = json.dumps(item, sort_keys=True, indent=4)
-                colorful_json = highlight(formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter())
+                colorful_json = highlight(
+                    formatted_json,
+                    lexers.JsonLexer(),
+                    formatters.TerminalFormatter(),
+                )
                 print(colorful_json)
             else:
                 print(item)  # Fallback for non-dict items
-            #print("-" * 50)
+            # print("-" * 50)
     elif isinstance(results, dict):
         # Format JSON for a single dictionary result
         formatted_json = json.dumps(results, sort_keys=True, indent=4)
-        colorful_json = highlight(formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter())
+        colorful_json = highlight(
+            formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter()
+        )
         print(colorful_json)
-        #print("-" * 50)
+        # print("-" * 50)
     else:
         print("No results to display.")
 
-def download_image(image_url, output_folder='images', session=None):
+
+def download_image(image_url, output_folder="images", session=None):
     """
     Downloads an image from the specified URL and saves it to the output folder.
 
@@ -57,7 +65,7 @@ def download_image(image_url, output_folder='images', session=None):
 
     response = session.get(image_url, stream=True)
     if response.status_code == 200:
-        with open(filepath, 'wb') as f:
+        with open(filepath, "wb") as f:
             for chunk in response.iter_content(8192):
                 f.write(chunk)
         print(f"Downloaded: {filepath}")
@@ -65,4 +73,3 @@ def download_image(image_url, output_folder='images', session=None):
     else:
         print(f"Failed to download: {image_url}")
         return None
-

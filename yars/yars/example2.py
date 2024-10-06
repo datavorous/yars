@@ -1,15 +1,19 @@
 import json
+
 from yars import YARS
-from utils import display_results, download_image
 
 # Initialize the YARS Reddit miner
 miner = YARS()
 filename = "subreddit_data3.json"
+
+
 # Function to scrape post details and comments from a given subreddit
 def scrape_subreddit_data(subreddit_name, limit=5, filename=filename):
     try:
         # Fetch recent posts from the subreddit
-        subreddit_posts = miner.fetch_subreddit_posts(subreddit_name, limit=limit, category="top", time_filter="all")
+        subreddit_posts = miner.fetch_subreddit_posts(
+            subreddit_name, limit=limit, category="top", time_filter="all"
+        )
 
         # Load existing data from JSON file if it exists
         try:
@@ -21,7 +25,7 @@ def scrape_subreddit_data(subreddit_name, limit=5, filename=filename):
         a = 1
         # Scrape details and comments for each post
         for post in subreddit_posts:
-            permalink = post['permalink']
+            permalink = post["permalink"]
             post_details = miner.scrape_post_details(permalink)
             print("pong ", a)
             a += 1
@@ -51,6 +55,7 @@ def scrape_subreddit_data(subreddit_name, limit=5, filename=filename):
     except Exception as e:
         print(f"Error occurred while scraping subreddit: {e}")
 
+
 # Function to save post data to a JSON file
 def save_to_json(data, filename=filename):
     try:
@@ -59,6 +64,7 @@ def save_to_json(data, filename=filename):
         print(f"Data successfully saved to {filename}")
     except Exception as e:
         print(f"Error saving data to JSON file: {e}")
+
 
 # Scrape the desired subreddit (example: 'nosleep')
 subreddit_name = "wbjee"
