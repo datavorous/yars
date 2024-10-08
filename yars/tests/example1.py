@@ -1,6 +1,5 @@
-from utils import display_results, download_image
-
-from yars import YARS
+from yars.yars import YARS
+from yars.utils import display_results, download_image
 
 miner = YARS()
 
