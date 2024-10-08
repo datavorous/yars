@@ -9,6 +9,8 @@ readme = "README.md"
 python = "^3.12"
 requests = "^2.32.3"
 pygments = "^2.18.0"
+logging = "^0.4.9.6"
+urllib3 = "^2.2.3"
 
 
 [build-system]
