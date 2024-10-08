@@ -1,6 +1,6 @@
 import json
+from yars.yars import YARS
 
-from yars import YARS
 
 # Initialize the YARS Reddit miner
 miner = YARS()
