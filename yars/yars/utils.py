@@ -58,7 +58,7 @@ def download_image(image_url, output_folder="images", session=None):
 
     try:
         response = session.get(image_url, stream=True)
-        response.raise_for_status() 
+        response.raise_for_status()
         with open(filepath, "wb") as f:
             for chunk in response.iter_content(8192):
                 f.write(chunk)
@@ -74,16 +74,17 @@ def download_image(image_url, output_folder="images", session=None):
 
 def export_to_json(data, filename="output.json"):
     try:
-        with open(filename, 'w', encoding='utf-8') as json_file:
+        with open(filename, "w", encoding="utf-8") as json_file:
             json.dump(data, json_file, indent=4)
         print(f"Data successfully exported to {filename}")
     except Exception as e:
         print(f"Error exporting to JSON: {e}")
 
+
 def export_to_csv(data, filename="output.csv"):
     try:
-        keys = data[0].keys() 
-        with open(filename, 'w', newline='', encoding='utf-8') as output_file:
+        keys = data[0].keys()
+        with open(filename, "w", newline="", encoding="utf-8") as output_file:
             dict_writer = csv.DictWriter(output_file, fieldnames=keys)
             dict_writer.writeheader()
             dict_writer.writerows(data)
