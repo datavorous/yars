@@ -269,3 +269,13 @@ Export data to a CSV file.
 
 - **data** (dict): Data to export.
 - **filename** (str): Output filename.
+
+## Contributing
+
+Contributions are welcome! For feature requests, bug reports, or questions, please open an issue. If you would like to contribute code, please open a pull request with your changes.
+
+### Our Notable Contributors
+
+<a href="https://github.com/datavorous/yars/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=datavorous/yars" />
+</a>
