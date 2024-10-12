@@ -1,9 +1,9 @@
+from __future__ import annotations
+from .agents import get_agent
 import time
-import agents
 import random
 import logging
 import requests
-from __future__ import annotations
 from urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
 
@@ -15,7 +15,7 @@ logger = logging.basicConfig(
 
 
 class YARS:
-    __slots__ = ("headers", "session", "proxy")
+    __slots__ = ("headers", "session", "proxy", "timeout")
 
     def __init__(self, user_agent="Mozilla/5.0", proxy=None, timeout=10):
         self.headers = {"User-Agent": user_agent}
@@ -41,7 +41,7 @@ class YARS:
         self.headers["User-Agent"] = user_agent
 
     def set_random_user_agent(self) -> None:
-        self.set_user_agent(agents.get_agent())
+        self.set_user_agent(get_agent())
 
     def search_reddit(
         self, query, limit=10, after=None, before=None, random_agent=False
