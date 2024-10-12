@@ -35,28 +35,20 @@ YARS is a Python package designed to simplify the process of scraping Reddit for
 
    ```
    git clone https://github.com/datavorous/YARS.git
-   cd yars
-   cd yars
    ```
+   Navigate inside the ```src``` folder.
 
-2. Install Poetry (if not already installed):
-
-   ```
-   pip install poetry
-   poetry shell
-   ```
-
-3. Install dependencies using Poetry:
+2. Install ```uv``` (if not already installed):
 
    ```
-   poetry install
+   pip install uv
    ```
 
-4. Run the application:
+3. Run the application:
    ```
-   cd yars
-   poetry run python example.py
+   uv run example.py
    ```
+   It'll setup the virtual env, install the necessary packages and run the ```example.py``` program.
 
 ## Usage
 
@@ -169,103 +161,11 @@ for z in range(3):
 
 You can now use these techniques to explore and scrape data from Reddit programmatically.
 
-# Docs
+## Contributing
 
-## Class: YARS
+Contributions are welcome! For feature requests, bug reports, or questions, please open an issue. If you would like to contribute code, please open a pull request with your changes.
 
-A class to interact with Reddit's API and perform various operations such as searching for posts,
-scraping post details, fetching user data, and retrieving posts from specific subreddits using the age old .json trick.
+### Our Notable Contributors
 
-### `__init__(self, user_agent=get_random_user_agent(), proxy=None)`
-
-Initialize the YARS scraper with a custom user agent and optional proxy configuration.
-
-- **user_agent** (str): Custom user agent for requests.
-- **proxy** (str): Optional proxy URL.
-
-### `set_uer_agent(self, user_agent)`
-
-Update user agent for requests.
-
-- **user_agent** (str): Custom user agent for requests.
-
-### `set_random_user_agent(self)`
-
-Set a random user agent for requests.
-
-### `search_reddit(self, query, limit=10, after=None, before=None)`
-
-Search Reddit for posts matching the query.
-
-- **query** (str): Search query string.
-- **limit** (int): Max number of posts (default 10).
-- **after** (str): Fetch results after this ID.
-- **before** (str): Fetch results before this ID.
-- **random_agent** (bool): Use a random user agent for requests.
-
-### `scrape_post_details(self, permalink)`
-
-Retrieve detailed information about a Reddit post.
-
-- **permalink** (str): The permalink to the post.
-
-- Returns a dictionary with:
-  - **title** (str): The post title.
-  - **body** (str): The post body.
-  - **comments** (list): A list of comments.
-
-### `_extract_comments(self, comments)`
-
-Recursively extract comments and their replies from a Reddit post.
-
-- **comments** (list): List of comments.
-
-- Returns a list of comments and their replies.
-
-### `scrape_user_data(self, username, limit=10)`
-
-Fetch recent activity (posts/comments) of a user.
-
-- **username** (str): Reddit username.
-- **limit** (int): Max number of items (default 10).
-- Returns a list of posts and comments.
-
-### `fetch_subreddit_posts(self, subreddit, limit=10, category='hot', time_filter='all')`
-
-Fetch posts from a subreddit based on category and time filter.
-
-- **subreddit** (str): The subreddit to fetch from.
-- **limit** (int): Max number of posts.
-- **category** (str): Type of posts ('hot', 'top', 'new').
-- **time_filter** (str): Time filter for top posts (default 'all').
-
-## Utility Functions
-
-### `display_results(results, title)`
-
-Displays search or scrape results in a formatted, syntax-highlighted manner using Pygments.
-
-- **results** (dict): The results to display.
-- **title** (str): The title of the results.
-
-### `download_image(image_url, output_folder='images', session=None)`
-
-Downloads an image from the provided URL and saves it in the specified output folder.
-
-- **image_url** (str): URL of the image to download.
-- **output_folder** (str): Folder to save the image.
-- **session** (requests.Session): Optional requests session.
-
-### `export_json(data, filename='output.json')`
-
-Export data to a JSON file.
-
-- **data** (dict): Data to export.
-- **filename** (str): Output filename.
-
-### `export_csv(data, filename='output.csv')`
-
-Export data to a CSV file.
-
-- **data** (dict): Data to export.
-- **filename** (str): Output filename.
+<a href="https://github.com/datavorous/yars/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=datavorous/yars" />
