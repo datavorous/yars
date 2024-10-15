@@ -198,14 +198,14 @@ class YARS:
         self, subreddit, limit=10, category="hot", time_filter="all"
     ):
         logging.info(
-            "Fetching subreddit posts for %s, limit: %d, category: %s, time_filter: %s",
+            "Fetching subreddit/user posts for %s, limit: %d, category: %s, time_filter: %s",
             subreddit,
             limit,
             category,
             time_filter,
         )
-        if category not in ["hot", "top", "new"]:
-            raise ValueError("Category must be either 'hot', 'top', or 'new'")
+        if category not in ["hot", "top", "new", "userhot", "usertop", "usernew"]:
+            raise ValueError("Category for Subredit must be either 'hot', 'top', or 'new' or for User must be 'userhot', 'usertop', or 'usernew'")
 
         batch_size = min(100, limit)
         total_fetched = 0
@@ -217,8 +217,14 @@ class YARS:
                 url = f"https://www.reddit.com/r/{subreddit}/hot.json"
             elif category == "top":
                 url = f"https://www.reddit.com/r/{subreddit}/top.json"
-            else:
+            elif category == "new":
                 url = f"https://www.reddit.com/r/{subreddit}/new.json"
+            elif category == "userhot":
+                url = f"https://www.reddit.com/user/{subreddit}/submitted/hot.json"
+            elif category == "usertop":
+                url = f"https://www.reddit.com/user/{subreddit}/submitted/top.json"
+            else:
+                url = f"https://www.reddit.com/user/{subreddit}/submitted/new.json"
 
             params = {
                 "limit": batch_size,
@@ -229,12 +235,12 @@ class YARS:
             try:
                 response = self.session.get(url, params=params, timeout=self.timeout)
                 response.raise_for_status()
-                logging.info("Subreddit posts request successful")
+                logging.info("Subreddit/user posts request successful")
             except Exception as e:
-                logging.info("Subreddit posts request unsuccessful: %s", e)
+                logging.info("Subreddit/user posts request unsuccessful: %s", e)
                 if response.status_code != 200:
                     print(
-                        f"Failed to fetch posts for subreddit {subreddit}: {response.status_code}"
+                        f"Failed to fetch posts for subreddit/user {subreddit}: {response.status_code}"
                     )
                     break
 
