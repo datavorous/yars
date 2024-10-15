@@ -1,5 +1,5 @@
 from __future__ import annotations
-from .agents import get_agent
+from .sessions import RandomUserAgentSession
 import time
 import random
 import logging
@@ -17,10 +17,8 @@ logger = logging.basicConfig(
 class YARS:
     __slots__ = ("headers", "session", "proxy", "timeout")
 
-    def __init__(self, user_agent="Mozilla/5.0", proxy=None, timeout=10):
-        self.headers = {"User-Agent": user_agent}
-        self.session = requests.Session()
-        self.session.headers.update(self.headers)
+    def __init__(self, proxy=None, timeout=10, random_user_agent=True):
+        self.session = RandomUserAgentSession() if random_user_agent else requests.Session()
         self.proxy = proxy
         self.timeout = timeout
 
@@ -32,29 +30,16 @@ class YARS:
 
         self.session.mount("https://", HTTPAdapter(max_retries=retries))
 
-        logging.info("Initialized YARS object with user agent: %s", user_agent)
-
         if proxy:
             self.session.proxies.update({"http": proxy, "https": proxy})
 
-    def set_user_agent(self, user_agent: str) -> None:
-        self.headers["User-Agent"] = user_agent
-
-    def set_random_user_agent(self) -> None:
-        self.set_user_agent(get_agent())
-
-    def search_reddit(
-        self, query, limit=10, after=None, before=None, random_agent=False
-    ):
+    def search_reddit(self, query, limit=10, after=None, before=None):
         url = "https://www.reddit.com/search.json"
         params = {"q": query, "limit": limit, "sort": "relevance", "type": "link"}
         if after:
             params["after"] = after
         if before:
             params["before"] = before
-
-        if random_agent:
-            self.set_random_user_agent()
 
         try:
             response = self.session.get(url, params=params, timeout=self.timeout)
