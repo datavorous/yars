@@ -67,7 +67,7 @@ class YARS:
         return self.handle_search(url, params, after, before)
     def search_subreddit(self, subreddit, query, limit=10, after=None, before=None, sort="relevance"):
         url = f"https://www.reddit.com/r/{subreddit}/search.json"
-        params = {"q": query, "limit": limit, "sort": "relevance", "type": "link"}
+        params = {"q": query, "limit": limit, "sort": "relevance", "type": "link","restrict_sr":"on"}
         return self.handle_search(url, params, after, before)
 
     def scrape_post_details(self, permalink):
