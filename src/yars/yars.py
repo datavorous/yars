@@ -32,10 +32,7 @@ class YARS:
 
         if proxy:
             self.session.proxies.update({"http": proxy, "https": proxy})
-
-    def search_reddit(self, query, limit=10, after=None, before=None):
-        url = "https://www.reddit.com/search.json"
-        params = {"q": query, "limit": limit, "sort": "relevance", "type": "link"}
+    def handle_search(self,url, params, after=None, before=None):
         if after:
             params["after"] = after
         if before:
@@ -64,6 +61,14 @@ class YARS:
             )
         logging.info("Search Results Retrned %d Results", len(results))
         return results
+    def search_reddit(self, query, limit=10, after=None, before=None):
+        url = "https://www.reddit.com/search.json"
+        params = {"q": query, "limit": limit, "sort": "relevance", "type": "link"}
+        return self.handle_search(url, params, after, before)
+    def search_subreddit(self, subreddit, query, limit=10, after=None, before=None, sort="relevance"):
+        url = f"https://www.reddit.com/r/{subreddit}/search.json"
+        params = {"q": query, "limit": limit, "sort": "relevance", "type": "link","restrict_sr":"on"}
+        return self.handle_search(url, params, after, before)
 
     def scrape_post_details(self, permalink):
         url = f"https://www.reddit.com{permalink}.json"
