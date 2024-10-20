@@ -1,4 +1,12 @@
 import json
+import os
+import sys
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(current_dir)
+src_path = os.path.join(project_root, "src")
+sys.path.append(src_path)
+
 from yars.yars import YARS
 from yars.utils import display_results, download_image
 
@@ -13,7 +21,11 @@ def display_data(miner, subreddit_name, limit=5):
     display_results(search_results, "SEARCH")
 
     # Scrape post details for a specific permalink
-    permalink = "https://www.reddit.com/r/getdisciplined/comments/1frb5ib/what_single_health_test_or_practice_has/".split("reddit.com")[1]
+    permalink = "https://www.reddit.com/r/getdisciplined/comments/1frb5ib/what_single_health_test_or_practice_has/".split(
+        "reddit.com"
+    )[
+        1
+    ]
     post_details = miner.scrape_post_details(permalink)
     if post_details:
         display_results(post_details, "POST DATA")
@@ -25,7 +37,9 @@ def display_data(miner, subreddit_name, limit=5):
     display_results(user_data, "USER DATA")
 
     # Scrape top posts from a subreddit
-    subreddit_posts = miner.fetch_subreddit_posts(subreddit_name, limit=limit, category="new", time_filter="week")
+    subreddit_posts = miner.fetch_subreddit_posts(
+        subreddit_name, limit=limit, category="new", time_filter="week"
+    )
     display_results(subreddit_posts, "SUBREDDIT Top Posts")
 
     # Attempt to download images from the first few posts
@@ -97,9 +111,9 @@ def save_to_json(data, filename=filename):
 # Main execution
 if __name__ == "__main__":
     subreddit_name = "wbjee"
-    
+
     # Display data for various functionalities
     display_data(miner, subreddit_name, limit=3)
-    
+
     # Scrape and save subreddit post data to JSON
     scrape_subreddit_data(subreddit_name, limit=3)
