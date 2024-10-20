@@ -46,7 +46,7 @@ YARS is a Python package designed to simplify the process of scraping Reddit for
 
 3. Run the application:
    ```
-   uv run example.py
+   uv run example/example.py
    ```
    It'll setup the virtual env, install the necessary packages and run the ```example.py``` program.
 
