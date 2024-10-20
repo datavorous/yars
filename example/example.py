@@ -2,72 +2,45 @@ import json
 import os
 import sys
 
+# Set up paths to access source files
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.dirname(current_dir)
 src_path = os.path.join(project_root, "src")
 sys.path.append(src_path)
 
+# Import necessary modules from YARS
 from yars.yars import YARS
 from yars.utils import display_results, download_image
 
 # Initialize the YARS Reddit miner
 miner = YARS()
-filename = "subreddit_data3.json"
+DEFAULT_FILENAME = "subreddit_data.json"
 
 
-# Function to display search results, subreddit posts, and user data
-def display_data(miner, subreddit_name, limit=5):
-    search_results = miner.search_reddit("OpenAI", limit=3)
-    display_results(search_results, "SEARCH")
-
-    # Scrape post details for a specific permalink
-    permalink = "https://www.reddit.com/r/getdisciplined/comments/1frb5ib/what_single_health_test_or_practice_has/".split(
-        "reddit.com"
-    )[
-        1
-    ]
-    post_details = miner.scrape_post_details(permalink)
-    if post_details:
-        display_results(post_details, "POST DATA")
-    else:
-        print("Failed to scrape post details.")
-
-    # Scrape user data
-    user_data = miner.scrape_user_data("iamsecb", limit=2)
-    display_results(user_data, "USER DATA")
-
-    # Scrape top posts from a subreddit
-    subreddit_posts = miner.fetch_subreddit_posts(
-        subreddit_name, limit=limit, category="new", time_filter="week"
+# Fetch and display top posts from a subreddit
+def display_subreddit_posts(miner, subreddit, limit=5):
+    """Fetch and display top subreddit posts."""
+    posts = miner.fetch_subreddit_posts(
+        subreddit, limit=limit, category="new", time_filter="week"
     )
-    display_results(subreddit_posts, "SUBREDDIT Top Posts")
-
-    # Attempt to download images from the first few posts
-    for idx, post in enumerate(subreddit_posts[:3]):
-        try:
-            image_url = post.get("image_url", post.get("thumbnail_url", ""))
-            if image_url:
-                download_image(image_url)
-        except Exception as e:
-            print(f"Error downloading image from post {idx}: {e}")
+    display_results(posts, "Top Posts")
 
 
-# Function to scrape subreddit post details and comments and save to JSON
-def scrape_subreddit_data(subreddit_name, limit=5, filename=filename):
+# Fetch subreddit post details and comments, then save them to a JSON file
+def save_subreddit_data(subreddit, limit=5, filename=DEFAULT_FILENAME):
+    """Scrape subreddit data, including post details and comments, and save to a JSON file."""
     try:
-        subreddit_posts = miner.fetch_subreddit_posts(
-            subreddit_name, limit=limit, category="top", time_filter="all"
-        )
+        posts = miner.fetch_subreddit_posts(subreddit, limit=limit, category="top", time_filter="all")
+        filepath = os.path.join(current_dir, filename)
 
-        # Load existing data from the JSON file, if available
+        # Load existing data if available
         try:
             with open(filename, "r") as json_file:
                 existing_data = json.load(json_file)
         except (FileNotFoundError, json.JSONDecodeError):
             existing_data = []
 
-        # Scrape details and comments for each post
-        for i, post in enumerate(subreddit_posts, 1):
+        for i, post in enumerate(posts, 1):
             permalink = post["permalink"]
             post_details = miner.scrape_post_details(permalink)
             print(f"Processing post {i}")
@@ -89,8 +62,8 @@ def scrape_subreddit_data(subreddit_name, limit=5, filename=filename):
                 # Append new post data to existing data
                 existing_data.append(post_data)
 
-                # Save the data incrementally to the JSON file
-                save_to_json(existing_data, filename)
+                # Save data incrementally to JSON
+                save_json_data(existing_data, filepath)
             else:
                 print(f"Failed to scrape details for post: {post['title']}")
 
@@ -98,22 +71,75 @@ def scrape_subreddit_data(subreddit_name, limit=5, filename=filename):
         print(f"Error occurred while scraping subreddit: {e}")
 
 
-# Function to save post data to a JSON file
-def save_to_json(data, filename=filename):
+# Save data to a JSON file
+def save_json_data(data, filepath):
+    """Save data to a JSON file."""
     try:
-        with open(filename, "w") as json_file:
+        with open(filepath, "w") as json_file:
             json.dump(data, json_file, indent=4)
-        print(f"Data successfully saved to {filename}")
+        print(f"Data successfully saved to {filepath}")
     except Exception as e:
         print(f"Error saving data to JSON file: {e}")
 
 
+# Download images from subreddit posts
+def download_subreddit_images(miner, subreddit, limit=5):
+    """Download images from subreddit posts."""
+    posts = miner.fetch_subreddit_posts(subreddit, limit=limit, category="new", time_filter="week")
+    for idx, post in enumerate(posts[:3]):
+        try:
+            image_url = post.get("image_url", post.get("thumbnail_url", ""))
+            if image_url:
+                print(f"Downloading image from post {idx + 1}: {image_url}")
+                download_image(image_url)
+        except Exception as e:
+            print(f"Error downloading image from post {idx + 1}: {e}")
+
+
+# Fetch and display search results
+def display_search_results(miner, query, limit=5):
+    """Fetch and display search results."""
+    results = miner.search_reddit(query, limit=limit)
+    display_results(results, "Search Results")
+
+
+# Fetch and display user data
+def display_user_data(miner, username, limit=5):
+    """Fetch and display Reddit user data."""
+    user_data = miner.scrape_user_data(username, limit=limit)
+    display_results(user_data, "User Data")
+
+
+# Fetch and display post comments using a permalink
+def display_post_comments(miner, permalink, limit=5):
+    permalink = permalink.split("reddit.com")[1]
+    post_details = miner.scrape_post_details(permalink)
+    if post_details:
+        display_results(post_details, "POST DATA")
+    else:
+        print("Failed to scrape post details.")
+
 # Main execution
 if __name__ == "__main__":
-    subreddit_name = "wbjee"
+    subreddit = "pics"
+    search_query = "OpenAI"
+    username = "iamsecb"
+    permalink = "https://www.reddit.com/r/getdisciplined/comments/1frb5ib/what_single_health_test_or_practice_has/"
 
-    # Display data for various functionalities
-    display_data(miner, subreddit_name, limit=3)
+    # Display subreddit data
+    display_subreddit_posts(miner, subreddit, limit=3)
 
-    # Scrape and save subreddit post data to JSON
-    scrape_subreddit_data(subreddit_name, limit=3)
+    # Scrape and save subreddit data to JSON
+    save_subreddit_data(subreddit, limit=3)
+
+    # Download images from subreddit posts
+    download_subreddit_images(miner, subreddit, limit=3)
+
+    # Display search results
+    display_search_results(miner, search_query, limit=3)
+
+    # Display user data
+    display_user_data(miner, username, limit=3)
+
+    # Display post comments
+    display_post_comments(miner, permalink, limit=3)
