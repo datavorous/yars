@@ -106,6 +106,7 @@ class YARS:
                 extracted_comment = {
                     "author": comment_data.get("author", ""),
                     "body": comment_data.get("body", ""),
+                    "score": comment_data.get("score",""),
                     "replies": [],
                 }
 
