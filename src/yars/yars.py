@@ -18,7 +18,9 @@ class YARS:
     __slots__ = ("headers", "session", "proxy", "timeout")
 
     def __init__(self, proxy=None, timeout=10, random_user_agent=True):
-        self.session = RandomUserAgentSession() if random_user_agent else requests.Session()
+        self.session = (
+            RandomUserAgentSession() if random_user_agent else requests.Session()
+        )
         self.proxy = proxy
         self.timeout = timeout
 
@@ -32,7 +34,8 @@ class YARS:
 
         if proxy:
             self.session.proxies.update({"http": proxy, "https": proxy})
-    def handle_search(self,url, params, after=None, before=None):
+
+    def handle_search(self, url, params, after=None, before=None):
         if after:
             params["after"] = after
         if before:
@@ -61,13 +64,23 @@ class YARS:
             )
         logging.info("Search Results Retrned %d Results", len(results))
         return results
+
     def search_reddit(self, query, limit=10, after=None, before=None):
         url = "https://www.reddit.com/search.json"
         params = {"q": query, "limit": limit, "sort": "relevance", "type": "link"}
         return self.handle_search(url, params, after, before)
-    def search_subreddit(self, subreddit, query, limit=10, after=None, before=None, sort="relevance"):
+
+    def search_subreddit(
+        self, subreddit, query, limit=10, after=None, before=None, sort="relevance"
+    ):
         url = f"https://www.reddit.com/r/{subreddit}/search.json"
-        params = {"q": query, "limit": limit, "sort": "relevance", "type": "link","restrict_sr":"on"}
+        params = {
+            "q": query,
+            "limit": limit,
+            "sort": "relevance",
+            "type": "link",
+            "restrict_sr": "on",
+        }
         return self.handle_search(url, params, after, before)
 
     def scrape_post_details(self, permalink):
@@ -76,9 +89,9 @@ class YARS:
         try:
             response = self.session.get(url, timeout=self.timeout)
             response.raise_for_status()
-            logging.info("Post details request successful : %s", url)
+            logging.info("Post details request successful : %s", str(url))
         except Exception as e:
-            logging.info("Post details request unsccessful: %e", e)
+            logging.info("Post details request unsuccessful: %s", str(e))
             if response.status_code != 200:
                 print(f"Failed to fetch post data: {response.status_code}")
                 return None
@@ -211,7 +224,9 @@ class YARS:
             time_filter,
         )
         if category not in ["hot", "top", "new", "userhot", "usertop", "usernew"]:
-            raise ValueError("Category for Subredit must be either 'hot', 'top', or 'new' or for User must be 'userhot', 'usertop', or 'usernew'")
+            raise ValueError(
+                "Category for Subredit must be either 'hot', 'top', or 'new' or for User must be 'userhot', 'usertop', or 'usernew'"
+            )
 
         batch_size = min(100, limit)
         total_fetched = 0
