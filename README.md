@@ -1,5 +1,7 @@
 ## Sponsored by [CoreClaw](https://www.coreclaw.com/?utm_source=github&utm_medium=cpc&utm_campaign=yars&utm_term=&utm_id=yars)
 
+<img src="https://files.catbox.moe/5k2cer.png">
+
 Stop maintaining scrapers.
 
 Get production ready data from Reddit, Google Maps, YouTube, Instagram, LinkedIn, Amazon and more.
