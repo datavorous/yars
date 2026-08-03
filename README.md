@@ -1,8 +1,20 @@
+## Sponsored by [CoreClaw](https://www.coreclaw.com/?utm_source=github&utm_medium=cpc&utm_campaign=yars&utm_term=&utm_id=yars)
+
+Stop maintaining scrapers.
+
+Get production ready data from Reddit, Google Maps, YouTube, Instagram, LinkedIn, Amazon and more.
+
+**FREE Credits for Every New Account.**
+
+Free Start here: [**CoreClaw**](https://www.coreclaw.com/?utm_source=github&utm_medium=cpc&utm_campaign=yars&utm_term=&utm_id=yars)
+
+---
+
 <div align="center">
   
 <img src="logo.svg" width="10%">
 
-# YARS (Yet Another Reddit Scraper)
+## YARS (Yet Another Reddit Scraper)
 
 [![GitHub stars](https://img.shields.io/github/stars/datavorous/yars.svg?style=social&label=Stars&style=plastic)](https://github.com/datavorous/yars/stargazers)<br>
 
