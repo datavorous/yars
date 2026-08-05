@@ -13,7 +13,7 @@ Free Start here: [**CoreClaw**](https://www.coreclaw.com/?utm_source=github&utm_
 ---
 
 <div align="center">
-  
+
 <img src="logo.svg" width="10%">
 
 ## YARS (Yet Another Reddit Scraper)
@@ -34,8 +34,8 @@ YARS is a Python package designed to simplify the process of scraping Reddit for
 - **Results Display**: Utilize `Pygments` for colorful display of JSON-formatted results.
 
 > [!WARNING]
-> Use with rotating proxies, or Reddit might gift you with an IP ban.  
-> I could extract max 2552 posts at once from 'r/all' using this.  
+> Use with rotating proxies, or Reddit might gift you with an IP ban.
+> I could extract max 2552 posts at once from 'r/all' using this.
 > [Here](https://files.catbox.moe/zdra2i.json) is a **7.1 MB JSON** file containing the top 100 posts from 'r/nosleep', which included post titles, body text, all comments and their replies, post scores, time of upload etc.
 
 ## Dependencies
@@ -183,4 +183,3 @@ Contributions are welcome! For feature requests, bug reports, or questions, plea
 
 <a href="https://github.com/datavorous/yars/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=datavorous/yars" />
-

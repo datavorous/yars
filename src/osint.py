@@ -2,6 +2,7 @@ from yars.yars import YARS
 from meta_ai_api import MetaAI
 import json
 
+
 class RedditUserAnalyzer:
     def __init__(self):
         self.miner = YARS()
@@ -11,8 +12,10 @@ class RedditUserAnalyzer:
     def scrape_user_data(self, username, limit=30):
         user_data = self.miner.scrape_user_data(username, limit)
         for item in user_data:
-            if item['type'] == 'comment':
-                self.data.append(f"{item['subreddit']} > {item['body'].replace('\n', ' <line gap> ')}")
+            if item["type"] == "comment":
+                self.data.append(
+                    f"{item['subreddit']} > {item['body'].replace('\n', ' <line gap> ')}"
+                )
 
     def generate_ai_prompt(self):
         prompt_template = {
@@ -32,15 +35,16 @@ For each aspect, provide a concise analysis supported by specific examples from 
 User's comment history:
 """
         }
-        
+
         # Add the scraped data to the prompt
         prompt_template["prompt_template"] += "\n".join(self.data)
-        
+
         return json.dumps(prompt_template)
 
     def analyze_user(self):
         prompt = self.generate_ai_prompt()
         return self.ai.prompt(message=prompt)
+
 
 if __name__ == "__main__":
     analyzer = RedditUserAnalyzer()
